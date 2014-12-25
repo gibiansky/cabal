@@ -292,6 +292,7 @@ data ConfigFlags = ConfigFlags {
     configProgSuffix    :: Flag PathTemplate, -- ^Installed executable suffix.
     configInstallDirs   :: InstallDirs (Flag PathTemplate), -- ^Installation
                                                             -- paths
+    configCabalDir      :: Flag FilePath, -- ^ Directory to use instead of $HOME/.cabal
     configScratchDir    :: Flag FilePath,
     configExtraLibDirs  :: [FilePath],   -- ^ path to search for extra libraries
     configExtraIncludeDirs :: [FilePath],   -- ^ path to search for header files
@@ -429,6 +430,11 @@ configureOptions showOrParseArgs =
           "suffix to be applied to installed executables"
           configProgSuffix (\v flags -> flags { configProgSuffix = v } )
           (reqPathTemplateArgFlag "SUFFIX")
+
+      ,option "" ["cabal-dir"]
+          "directory to use instead of $HOME/.cabal"
+          configCabalDir (\v flags -> flags { configCabalDir = v } )
+          (reqArgFlag "DIR")
 
       ,option "" ["library-vanilla"]
          "Vanilla libraries"
